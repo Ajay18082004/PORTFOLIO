@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0a0a0a; /* Dark background */
+            color: #fff;
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 15px 20px;
+            background-color: #1a1a2e; /* Dark blue */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        nav a {
+            color: #00ffff; /* Light cyan */
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #0af; /* Neon blue on hover */
+        }
+
+        /* Home Section Styles */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            transition: transform 0.3s; /* Smooth transition for scaling */
+        }
+
+        #home:hover {
+            transform: scale(1.01); /* Slightly enlarge the section on hover */
+        }
+
+        #photo {
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin: 20px 0;
+            box-shadow: 0 0 30px rgba(1, 300, 300, 1.0), 0 0 40px rgba(1, 300, 300, 1.0); /* Light cyan glow */
+            transition: transform 0.6s ease, box-shadow 0.6s ease; /* Added transition for box-shadow */
+        }
+
+        #photo:hover {
+            transform: scale(1.1); /* Slightly enlarge the image on hover */
+            box-shadow: 0 0 30px rgba(1, 300, 300, 1), 0 0 60px rgba(1, 300, 300, 1.0); /* Enhanced glow on hover */
+        }
+
+        #home h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #00ffff; /* Light cyan for headings */
+            transition: color 0.3s; /* Smooth transition for color */
+        }
+
+        #home h1:hover {
+            color: #0af; /* Change color on hover */
+        }
+
+        #home .title {
+            font-size: 24px;
+            color: #aaa;
+            transition: color 0.3s; /* Smooth transition for color */
+        }
+
+        #home .title:hover {
+            color: #fff; /* Change color on hover */
+        }
+
+        .section {
+            padding: 120px 40px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding-top: 120px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #00ffff; /* Light cyan for headings */
+        }
+
+        .title {
+            font-size: 24px;
+            color: #aaa;
+        }
+
+        .dynamic-role {
+            color: #00ffff;
+            animation: fadeIn 2s infinite alternate;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .about {
+            display: flex;
+            align-items: center;
+            padding: 30px;
+            transition: transform 0.3s; /* Keep the transition for hover effect */
+        }
+
+        .about:hover {
+            transform: scale(1.02);
+        }
+
+        .about img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin-right: 30px;
+            transition: transform 0.3s;
+        }
+
+        .about img:hover {
+            transform: scale(1.1);
+        }
+
+        .about h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .about h2 {
+            margin-top: 10px;
+            font-size: 1.8em;
+            color: #007bff;
+        }
+
+        .about p {
+            font-size: 1.2em;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+
+        .resume-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .resume-button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Skills Section Styles */
+        .skills {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .skills-container {
+            width: 100%;
+            max-width: 400px; /* Adjust width as needed */
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #8bf3ff; /* Light neon blue for the heading */
+            text-shadow: 0 0 5px #8bf3ff; /* Reduced glowing effect */
+        }
+
+        .skill-row {
+            margin: 20px 0; /* Increased margin for one line space */
+        }
+
+        .skill-name {
+            color: #fff; /* White for skill names */
+            font-weight: normal; /* Reduced font weight */
+            margin-bottom: 20px;
+            text-shadow: 0 0 3px #8bf3ff; /* Reduced glowing effect */
+        }
+
+        .bar {
+            background-color: #00ffff; /* Light cyan for the skill bar */
+            height: 20px; /* Slightly reduced height */
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+            width: 0; /* Start width at 0 for animation */
+            transition: width 0.3s;
+            animation: grow 1s forwards; /* Apply animation */
+            box-shadow: 0 0 5px #00ffff; /* Reduced neon glow effect */
+        }
+
+        /* Add hover effect for technical skills */
+        .bar:hover {
+            background-color: #0af; /* Change to a different color on hover */
+            box-shadow: 0 0 20px #0af; /* Add a glow effect */
+        }
+
+        .label {
+            position: absolute;
+            left: 50%; /* Center the label */
+            transform: translateX(-50%); /* Adjust for centering */
+            color: #fff; /* White for labels */
+            font-weight: normal; /* Reduced font weight */
+            font-size: 12px;
+        }
+
+        /* Animation keyframes */
+        @keyframes grow {
+            from {
+                width: 0;
+            }
+            to {
+                width: var(--bar-width); /* Use a custom property */
+            }
+        }
+
+        /* Professional Skills Section Styles */
+        .skills-professional {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center align */
+        }
+
+        .professional-heading {
+            margin-bottom: 20px; /* Space below the heading */
+            font-size: 24px; /* Adjust font size as needed */
+            font-weight: bold;
+            color: #00ffff; /* Neon color for heading */
+        }
+
+        .skill-circle-container {
+            display: flex; /* Use flex for the circle container */
+            justify-content: center; /* Center circles */
+            flex-wrap: wrap; /* Wrap to the next line */
+        }
+
+        .skill-circle {
+            width: 100px; /* Circle size */
+            height: 100px; /* Circle size */
+            position: relative;
+            margin: 40px; /* Space around circles */
+        }
+
+        /* Add hover effect for professional skills */
+        .skill-circle:hover {
+            transform: scale(1.9); /* Slightly enlarge the circle on hover */
+            transition: transform 0.2s; /* Smooth transition */
+        }
+
+        .circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(#00ffff 0% var(--percent), #333 var(--percent) 100%);
+            box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 45px #00ffff, 0 0 60px #00ffff;
+        }
+
+        .inner-circle {
+            width: 80%;
+            height: 80%;
+            background-color: #1a1a2e;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px; /* Adjusted font size */
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 15px #00ffff;
+        }
+
+        .skill-label {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #fff;
+            font-weight: bold;
+            text-align: center; /* Center align the label */
+        }
+
+        /* Projects Section Styles */
+        .project-container {
+            display: flex;
+            overflow-x: auto; /* Enables horizontal scrolling */
+            padding: 10px; /* Reduced padding */
+            gap: 10px; /* Reduced gap */
+            scrollbar-width: thin; /* For Firefox */
+        }
+
+        .project-container::-webkit-scrollbar {
+            height: 8px; /* Height of the scrollbar */
+        }
+
+        .project-container::-webkit-scrollbar-thumb {
+            background: #00ffff; /* Color of the scrollbar thumb */
+            border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+        }
+
+        .project-container::-webkit-scrollbar-track {
+            background: #1a1a2e; /* Color of the scrollbar track */
+        }
+
+        .project-item {
+            background-color: #1a1a2e; /* Dark blue */
+            border-radius: 10px;
+            min-width: 250px; /* Reduced min-width */
+            flex: 1;
+            max-width: 300px; /* Reduced max-width */
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-item img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        /* Modal Styles for Project Description */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal #projectDescription {
+            background-color: #2a2a2a;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .button {
+            background-color: #00aaff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            background-color: #008fcc;
+        }
+
+        /* Certifications Section Styles */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Reduced min-width */
+            gap: 30px; /* Reduced gap */
+        }
+
+        .certification-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            min-width: 200px; /* Reduced min-width */
+        }
+
+        .certification-card:hover {
+            transform: scale(1.05);
+        }
+
+        .certification-card img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .certification-info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(30, 30, 47, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .certification-card:hover .certification-info {
+            opacity: 1;
+        }
+
+        /* Coding Platforms Section Styles */
+        .platform-title {
+            font-size: 24px;
+            margin: 80px 0;
+        }
+
+        .platform-item {
+            display: inline-block; /* Aligns items in a row */
+            text-align: center; /* Centers text below icons */
+            margin: 0 30px; /* Space between icons */
+            transition: transform 0.8s; /* Smooth transition for scaling */
+        }
+
+        .platform-item:hover {
+            transform: scale(1.9); /* Slightly enlarge the item on hover */
+        }
+
+        .platform-icon {
+            text-decoration: none; /* Removes underline from links */
+            color: #00ffff; /* Icon color */
+        }
+
+        .platform-name {
+            display: block; /* Ensures names are below the icons */
+            margin-top: 10px; /* Space between icon and name */
+            font-size: 20px; /* Adjust font size as needed */
+            color: #ffffff; /* Adjust text color */
+        }
+
+        .platform-icon img {
+            display: inline-block; /* Ensures icons are treated as inline elements */
+        }
+
+        /* Social Media Section Styles */
+        #social-media {
+            margin-top: 150px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 100px;
+        }
+
+        .social-icons a {
+            transition: transform 0.8s, color 0.5s; /* Smooth transition for scaling and color */
+        }
+
+        .social-icons a:hover {
+            transform: scale(3.1); /* Slightly enlarge the icon on hover */
+            color: #0af; /* Change color on hover */
+        }
+
+        /* Contact Me Section Styles */
+        #contact {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        #contact form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #contact label {
+            margin: 10px 0 5px;
+            color: #aaa;
+        }
+
+        #contact input, #contact textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #00ffff;
+            border-radius: 5px;
+            background-color: #1a1a2e;
+            color: #fff;
+        }
+
+        #contact button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #contact button:hover {
+            background-color: #218838;
+        }
+
+        /* Updated Project Section Styles */
+        .project {
+            min-width: 200px; /* Minimum width for each project */
+            background: #1a1a2e; /* Dark blue background */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Light cyan shadow */
+            text-align: center; /* Center align text */
+            cursor: pointer; /* Cursor indicates clickable */
+            transition: transform 0.3s; /* Smooth transition */
+        }
+        .project img {
+            max-width: 100%; /* Responsive image */
+            border-radius: 5px;
+        }
+        .project:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a onclick="scrollToSection('home')">Home</a>
+        <a onclick="scrollToSection('about')">About</a>
+        <a onclick="scrollToSection('skills')">Skills</a>
+        <a onclick="scrollToSection('projects')">Projects</a>
+        <a onclick="scrollToSection('certifications')">Certifications</a>
+        <a onclick="scrollToSection('coding-platforms')">Coding Platforms</a>
+    </nav>
+
+    <!-- Home Section -->
+    <div id="home" class="section container">
+        <img id="photo" src="IMG-20240826-WA0007.jpg" alt="Your Photo">
+        <h1>Hello, It's Me<br> AJAY S</h1>
+        <p class="title">And I'm a <span class="dynamic-role">Cloud developer</span></p>
+    </div>
+
+    <div class="container">
+        <div class="about">
+            <img src="IMG-20240826-WA0007.jpg" alt="Profile Photo">
+            <div>
+                <h1>About Me</h1>
+                <p>
+                    I am a dedicated Cloud Developer with over 4 years of experience in designing, 
+                    deploying, and managing cloud-based solutions. My expertise lies in leveraging 
+                    cloud technologies to build scalable and secure applications that meet client 
+                    needs. I am passionate about optimizing cloud infrastructure and implementing 
+                    best practices in cloud security and performance.
+                </p>
+                <button class="resume-button" onclick="viewResume()">View Resume</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills Section -->
+    <div id="skills" class="section">
+        <h2>My Skills</h2>
+        <div class="skills">
+            <div class="skills-container">
+                <h2>Technical Skills</h2>
+                <div class="skill-row">
+                    <span class="skill-name">HTML</span>
+                    <div class="bar" style="--bar-width: 90%; width: 90%;">
+                        <span class="label">90%</span>
+                    </div>
+                </div>
+                <div class="skill-row">
+                    <span class="skill-name">CSS</span>
+                    <div class="bar" style="--bar-width: 80%; width: 80%;">
+                        <span class="label">80%</span>
+                    </div>
+                </div>
+                <div class="skill-row">
+                    <span class="skill-name">JavaScript</span>
+                    <div class="bar" style="--bar-width: 70%; width: 70%;">
+                        <span class="label">70%</span>
+                    </div>
+                </div>
+                <div class="skill-row">
+                    <span class="skill-name">Python</span>
+                    <div class="bar" style="--bar-width: 60%; width: 60%;">
+                        <span class="label">60%</span>
+                    </div>
+                </div>
+                <div class="skill-row">
+                    <span class="skill-name">React</span>
+                    <div class="bar" style="--bar-width: 75%; width: 75%;">
+                        <span class="label">75%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="skills-professional">
+            <div class="professional-heading">Professional Skills</div>
+            <div class="skill-circle-container">
+                <div class="skill-circle" style="--percent: 90%">
+                    <div class="circle"></div>
+                    <div class="inner-circle">90%</div>
+                    <div class="skill-label">Creativity</div>
+                </div>
+                <div class="skill-circle" style="--percent: 75%">
+                    <div class="circle"></div>
+                    <div class="inner-circle">75%</div>
+                    <div class="skill-label">Problem Solving</div>
+                </div>
+                <div class="skill-circle" style="--percent: 65%">
+                    <div class="circle"></div>
+                    <div class="inner-circle">65%</div>
+                    <div class="skill-label">Communication</div>
+                </div>
+                <div class="skill-circle" style="--percent: 68%">
+                    <div class="circle"></div>
+                    <div class="inner-circle">68%</div>
+                    <div class="skill-label">Teamwork</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div id="projects" class="section">
+        <h2>My Projects</h2>
+        <p>Take a look at some of my recent projects, showcasing my skills in design and development across various platforms and technologies.</p>
+
+        <div class="project-container">
+            <div class="project" onclick="window.open('https://github.com/Ajay18082004/Construction-monitoring', '_blank')">
+                <img src="project/drone.jpg" alt="AI Project">
+                <h2>AI BASED CONSTRUCTION PROJECT</h2>
+            </div>
+            <div class="project" onclick="window.open('https://github.com/Ajay18082004/Title-verification-', '_blank')">
+                <img src="project/title.jpg" alt="AI Project">
+                <h2>AI BASED TITLE VERIFICATION PROJECT</h2>
+            </div>
+            <div class="project" onclick="window.open('https://github.com/Ajay18082004/Adaptive-bike-riding-for-limb-amputtes', '_blank')">
+                <img src="project/Screenshot 2024-11-08 060526.jpg" alt="Embedded Project">
+                <h2>ADAPTIVE EQUIPMENT FOR BIKE RIDING FOR LOWER LIMB AMPUTEES</h2>
+            </div>
+            <div class="project" onclick="window.open('project4.html', '_blank')">
+                <img src="project/milege cal.jpg" alt="Web Design Project">
+                <h2>Web Design Project</h2>
+            </div>
+            <div class="project" onclick="window.open('project5.html', '_blank')">
+                <img src="project/citizen.jpg" alt="Web Design Project">
+                <h2>Web Design Project</h2>
+            </div>
+        </div>
+
+        <!-- Project Modal -->
+        <div class="modal" id="projectModal">
+            <span class="close" onclick="closeProjectModal()">&times;</span>
+            <div id="projectDescription"></div>
+            <button id="githubLink" class="button" style="margin-top: 10px; display: none;" onclick="openGithubLink()">View on GitHub</button>
+        </div>
+    </div>
+
+    <!-- Certifications Section -->
+    <div id="certifications" class="section">
+        <h2>Certifications</h2>
+        <div class="grid-container">
+            <div class="certification-card">
+                <img src="certificate/logo/oracle.jpg" alt="Certification 1">
+                <div class="certification-info">
+                    <h2>Web Development</h2>
+                    <p>Certified in Oracle.</p>
+                    <button class="button" onclick="openModal('certificate/Screenshot 2025-02-18 132056.jpg')">View Certificate</button>
+                </div>
+            </div>
+            <div class="certification-card">
+                <img src="certificate/logo/awslogo.jpg" alt="Certification 2">
+                <div class="certification-info">
+                    <h2>AWS CLOUD</h2>
+                    <p>Certified in AWS Cloud Computing.</p>
+                    <button class="button" onclick="openModal('certificate/awscert.jpg')">View Certificate</button>
+                </div>
+            </div>
+            <div class="certification-card">
+                <img src="certificate/logo/icons8-python-96.jpg" alt="Certification 2">
+                <div class="certification-info">
+                    <h2>PYTHON</h2>
+                    <p>Certified in Python Basics.</p>
+                    <button class="button" onclick="openModal('certificate/pythonbasic.jpg')">View Certificate</button>
+                </div>
+            </div>
+            <div class="certification-card">
+                <img src="certificate/logo/icons8-python-96.jpg" alt="Certification 2">
+                <div class="certification-info">
+                    <h2>PYTHON</h2>
+                    <p>Certified in Python Intermediate.</p>
+                    <button class="button" onclick="openModal('certificate/pythoninter.jpg')">View Certificate</button>
+                </div>
+            </div>
+            <div class="certification-card">
+                <img src="certificate/logo/awslogo.jpg" alt="Certification 2">
+                <div class="certification-info">
+                    <h2>AWS CLOUD</h2>
+                    <p>Certified in AWS Cloud Computing.</p>
+                    <button class="button" onclick="openModal('certificate/awscert.jpg')">View Certificate</button>
+                </div>
+            </div>
+            <div class="certification-card">
+                <img src="certificate/logo/guvilogo.jpg" alt="Certification 3">
+                <div class="certification-info">
+                    <h2>Guvi</h2>
+                    <p>Certified in Introduction to Data Engineering.</p>
+                    <button class="button" onclick="openModal('certificate/guvicert.jpg')">View Certificate</button>
+                </div>
+            </div>
+            <div class="certification-card">
+                <img src="certificate/logo/cldprac.jpg" alt="Certification 4">
+                <div class="certification-info">
+                    <h2>AWS CLOUD PRACTITIONER</h2>
+                    <p>Certified in Cloud Practitioner essentials.</p>
+                    <button class="button" onclick="openModal('certificate/cldpract.jpg')">View Certificate</button>
+                </div>
+            </div>
+            <div class="certification-card">
+                <img src="certificate/logo/cert.jpg" alt="Certification 4">
+                <div class="certification-info">
+                    <h2>Participation Certificate</h2>
+                    <p>Certified in participation certificates.</p>
+                    <button class="button" onclick="openModal('certificate/cldpract.jpg,guvicert.jpg,awscert.jpg')">View Certificate</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal" id="certificationModal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="" alt="Certification">
+        </div>
+    </div>
+
+    <!-- Coding Platforms Section -->
+    <div id="coding-platforms" class="section">
+        <h2 class="platform-title">Coding Platforms</h2>
+        <div>
+            <div class="platform-item">
+                <a href="https://leetcode.com/u/18AJAY/" target="blank" class="platform-icon">
+                    <img src="icon/leetcode.jpg" alt="LeetCode Logo" style="width: 50px; height: auto;">
+                </a>
+                <span class="platform-name">LeetCode</span>
+            </div>
+            <div class="platform-item">
+                <a href="https://www.codechef.com/users/ajay_1808" target="blank" class="platform-icon">
+                    <img src="icon/icons8-codechef-48 (1).png" alt="CodeChef Logo" style="width: 50px; height: auto;">
+                </a>
+                <span class="platform-name">CodeChef</span>
+            </div>
+            <div class="platform-item">
+                <a href="https://www.hackerearth.com/@ajaysuresh259/" target="blank" class="platform-icon">
+                    <img src="icon/id1vDiJ8TC_1739114709928.png" alt="Hackerearth Logo" style="width: 50px; height: auto;">
+                </a>
+                <span class="platform-name">Hackerearth</span>
+            </div>
+            <div class="platform-item">
+                <a href="https://www.hackerrank.com" target="blank" class="platform-icon">
+                    <img src="icon/icons8-hackerrank-is-a-technology-company-that-focuses-on-competitive-programming-48.png" alt="HackerRank Logo" style="width: 50px; height: auto;">
+                </a>
+                <span class="platform-name">HackerRank</span>
+            </div>
+            <div class="platform-item">
+                <a href="https://www.geeksforgeeks.org/user/ajaysurucj2/" target="blank" class="platform-icon">
+                    <img src="icon/icons8-geeksforgeeks-96.jpg" alt="GeeksforGeeks Logo" style="width: 50px; height: auto;">
+                </a>
+                <span class="platform-name">GeeksForGeeks</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Me Section -->
+    <div id="contact" class="section">
+        <h2>Contact Me</h2>
+        <p>If you have any questions or would like to get in touch, please fill out the form below:</p>
+        <form id="contactForm" action="YOUR_FORM_HANDLER_URL" method="POST">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="button">Send Message</button>
+        </form>
+    </div>
+
+    <!-- Social Media Section -->
+    <div id="social-media" class="section">
+        <h2>Connect with Me</h2>
+        <div class="social-icons" style="display: flex; justify-content: center; margin-top: 20px;">
+            <a href="https://github.com/Ajay18082004" target="_blank" style="margin: 0 15px;">
+                <i class="fab fa-github fa-2x" style="color: #00ffff;"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/ajay-s-bb7640269/" target="_blank"style="margin: 0 15px;">
+                <i class="fab fa-linkedin fa-2x" style="color: #00ffff;"></i>
+            </a>
+            <a href="https://x.com/Ajay_1808_2004" target="_blank" style="margin: 0 15px;">
+                <i class="fab fa-twitter fa-2x" style="color: #00ffff;"></i>
+            </a>
+            <a href="https://www.instagram.com/yourusername/" target="_blank" style="margin: 0 15px;">
+                <i class="fab fa-instagram fa-2x" style="color: #00ffff;"></i>
+            </a>
+            <a href="https://www.youtube.com/@Ajay_1808-AJ" target="_blank" style="margin: 0 15px;">
+                <i class="fab fa-youtube fa-2x" style="color: #00ffff;"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function openModal(imageUrl) {
+            document.getElementById('modalImage').src = imageUrl;
+            document.getElementById('certificationModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('certificationModal').style.display = 'none';
+        }
+
+        function openProjectModal(description) {
+            document.getElementById('projectDescription').innerText = description;
+            document.getElementById('projectModal').style.display = 'flex';
+
+            // Store the GitHub link based on the project description
+            const links = {
+                'AI BASED CONSTRUCTION PROJECT': 'https://github.com/Ajay18082004/Construction-monitoring',
+                'AI BASED TITLE VERIFICATION PROJECT': 'https://github.com/Ajay18082004/Title-verification-',
+                'ADAPTIVE EQUIPMENT FOR BIKE RIDING FOR LOWER LIMB AMPUTEES ': 'https://github.com/Ajay18082004/Adaptive-bike-riding-for-limb-amputtes',
+                'Web Design Project': 'project4.html' // Adjust link as needed
+            };
+
+            document.getElementById('githubLink').onclick = function() {
+                window.open(links[description], '_blank');
+            };
+            document.getElementById('githubLink').style.display = 'block';
+        }
+
+        function closeProjectModal() {
+            document.getElementById('projectModal').style.display = 'none';
+        }
+
+        // Close the modal when clicking outside of the modal content
+        window.onclick = function(event) {
+            const projectModal = document.getElementById('projectModal');
+            if (event.target === projectModal) {
+                closeProjectModal();
+            }
+
+            const certificationModal = document.getElementById('certificationModal');
+            if (event.target === certificationModal) {
+                closeModal();
+            }
+        }
+
+        document.querySelectorAll('.skill-circle').forEach(circle => {
+            const percentage = circle.style.getPropertyValue('--percent');
+            const degree = (percentage / 100) * 360;
+            circle.querySelector('.circle').style.transform = `rotate(${degree}deg)`;
+        });
+
+        function viewResume() {
+            // Replace with the actual link to your resume
+            window.open('RESUME CLG.pdf', '_blank');
+        }
+    </script>
+</body>
+</html>
